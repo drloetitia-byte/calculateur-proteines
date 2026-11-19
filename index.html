@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mon besoin quotidien en protéines</title>
+<style>
+body{font-family:Arial,sans-serif;background:#faf7ef;color:#203d2d;margin:0;padding:20px}
+main{max-width:560px;margin:auto}
+h1{text-align:center;font-size:28px}
+.subtitle{text-align:center;color:#56715d}
+.card{background:white;border-radius:20px;padding:24px;margin-top:24px}
+label{display:block;font-weight:bold;margin:20px 0 8px}
+input{width:100%;box-sizing:border-box;padding:16px;border:1px solid #bbb;border-radius:12px;font-size:20px}
+button{background:#203d2d;color:white;border:0;border-radius:12px;padding:17px;width:100%;font-size:18px;margin-top:24px}
+#resultat{display:none;background:#eaf2e9;border-radius:14px;padding:22px;margin-top:22px;text-align:center}
+#valeur{font-size:32px;font-weight:bold}
+small{display:block;line-height:1.6;margin-top:20px;color:#555}
+</style>
+</head>
+<body>
+<main>
+<h1>Mon besoin quotidien en protéines</h1>
+<p class="subtitle">Je préserve mes muscles et je préviens la sarcopénie</p>
+<div class="card">
+<p>Indiquez votre âge et votre poids pour estimer vos besoins quotidiens en protéines.</p>
+<label for="age">Mon âge (années)</label>
+<input id="age" type="number" min="18" max="120" step="1" placeholder="Ex. : 68">
+<label for="poids">Mon poids (kg)</label>
+<input id="poids" type="number" min="1" max="400" step="0.1" placeholder="Ex. : 70">
+<button onclick="calculer()">Calculer mes besoins</button>
+<div id="resultat" aria-live="polite">
+<div id="valeur"></div>
+<p id="message"></p>
+</div>
+<small>Ce calcul est indicatif pour les adultes. Les besoins varient selon l'état de santé, l'activité physique et l'état nutritionnel. En cas de maladie rénale, de dénutrition ou de poids très élevé ou très faible, demandez un avis médical. Le renforcement musculaire est essentiel pour prévenir la sarcopénie.</small>
+</div>
+</main>
+<script>
+function calculer(){
+const age=Number(document.getElementById('age').value);
+const poids=Number(document.getElementById('poids').value);
+const box=document.getElementById('resultat');
+const valeur=document.getElementById('valeur');
+const message=document.getElementById('message');
+box.style.display='block';
+if(!Number.isInteger(age)||age<18||age>120||!Number.isFinite(poids)||poids<=0||poids>400||document.getElementById('age').value===''||document.getElementById('poids').value===''){
+valeur.textContent='Mesures invalides';
+message.textContent='Veuillez saisir un âge entre 18 et 120 ans et un poids valide.';
+return;
+}
+if(age>=65){
+valeur.textContent=Math.round(poids)+' à '+Math.round(poids*1.2)+' g/jour';
+message.textContent='Fourchette indicative de 1,0 à 1,2 g/kg/jour pour les personnes âgées en bonne santé.';
+}else{
+valeur.textContent=Math.round(poids*0.83)+' g/jour';
+message.textContent='Apport de référence de 0,83 g/kg/jour pour un adulte en bonne santé.';
+}
+}
+</script>
+</body>
+</html>
